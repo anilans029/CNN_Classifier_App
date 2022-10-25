@@ -6,7 +6,7 @@ import logging
 logging.basicConfig(level= logging.INFO, format= "[%(asctime)s]: %(message)s: ")
 
 
-package_name = "classifer_app"
+package_name = "classifier_app"
 list_of_files = [
                 ".github/workflows/.gitkeep",
                 f"src/{package_name}/__init__.py",
