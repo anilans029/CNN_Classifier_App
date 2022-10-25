@@ -6,7 +6,7 @@ REQUIREMENTS_FILE = 'requirements.txt'
 PROJECT_NAME = "CNN_Classifier_App"
 USER_NAME = 'anilans029'
 USER_EMAIL = 'anilsai029@gmail.com'
-PACKAGE_NAME = "clasifier_app"
+PACKAGE_NAME = "classifier_app"
 
 
 
@@ -31,7 +31,8 @@ setup(
      project_urls={
         "Bug Tracker": f"https://github.com/{USER_NAME}/{PROJECT_NAME}/issues",
     },
-    packages=find_packages(where= "src"),
+    package_dir={"": "src"},
+    packages=find_packages(where="src"),
     python_requires=">=3.7",
     install_requires=get_requirements()
 )
