@@ -28,6 +28,9 @@ setup(
     author_email="anilsai029@gmail.com",
     long_description_content_type="text/markdown",
     url=f"https://github.com/{USER_NAME}/{PROJECT_NAME}",
+     project_urls={
+        "Bug Tracker": f"https://github.com/{USER_NAME}/{PROJECT_NAME}/issues",
+    },
     packages=find_packages(where= "src"),
     python_requires=">=3.7",
     install_requires=get_requirements()
