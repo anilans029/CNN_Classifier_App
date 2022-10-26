@@ -13,7 +13,8 @@
 9. Run tox for testing the package
 10. Update the dvc.yaml
 11. run "dvc repo" for running all the stages in the pipeline
-    
+
+![img](https://raw.githubusercontent.com/anilans029/CNN_Classifier_App/main/docs/project_workflow.png?token=GHSAT0AAAAAABZ6JJ3DPEUYQOVO5ZBXDI4WY2ZKMTQ)    
 ## setup
 1. To create the project structure
 ```
