@@ -1,0 +1,1 @@
+from classifier_app.config.configuration import ConfigurationManager
