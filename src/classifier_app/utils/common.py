@@ -9,7 +9,7 @@ from typing import Any
 from box.exceptions import BoxValueError
 from ensure import ensure_annotations
 from box import ConfigBox
-
+from classifier_app import logger
 
 @ensure_annotations
 def read_yaml(path_to_yaml: Path)-> ConfigBox:
@@ -27,6 +27,7 @@ def read_yaml(path_to_yaml: Path)-> ConfigBox:
     try:
         with open(path_to_yaml,"r") as yaml_file:
             yaml_file_content = yaml.safe_load(yaml_file)
+            logger.info(f"yaml file: {path_to_yaml} loaded successfully")
             return ConfigBox(yaml_file_content)
     except BoxValueError:
         raise ValueError("yaml file is empty")
