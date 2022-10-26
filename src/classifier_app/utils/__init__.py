@@ -1,1 +1,1 @@
-from src.classifier_app.utils.common import *
+from classifier_app.utils.common import *
