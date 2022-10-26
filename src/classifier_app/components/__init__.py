@@ -1,0 +1,1 @@
+from classifier_app.components.data_ingestion import DataIngestion
