@@ -130,3 +130,7 @@ dmypy.json
 
 # vs code
 .vscode
+
+# image data
+*.jpg
+*.zip
