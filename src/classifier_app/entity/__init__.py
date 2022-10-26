@@ -1,0 +1,1 @@
+from classifier_app.entity.config_entity import DataIngestionConfig
