@@ -14,7 +14,7 @@
 10. Update the dvc.yaml
 11. run "dvc repo" for running all the stages in the pipeline
 
-![img](docs\project_workflow.png)
+![img](docs/project_workflow.png)
 
 ## setup
 1. To create the project structure
