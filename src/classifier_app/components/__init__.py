@@ -1,1 +1,3 @@
 from classifier_app.components.data_ingestion import DataIngestion
+from classifier_app.components.prepare_base_model import PrepareBaseModel
+from classifier_app.components.training import PrepareCallback, Training

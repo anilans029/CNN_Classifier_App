@@ -1,6 +1,8 @@
 from classifier_app.constants import *
 from classifier_app.utils import read_yaml,create_directories
-from classifier_app.entity.config_entity import DataIngestionConfig
+from classifier_app.entity.config_entity import DataIngestionConfig, PrepareBaseModelConfig, PrepareCallbacksconfig,TrainingConfig
+import os
+
 
 class ConfigurationManager:
 
@@ -27,3 +29,67 @@ class ConfigurationManager:
                               )
         return data_ingestion_config
 
+    def PrepareBaseModelConfig(self)-> PrepareBaseModelConfig:
+        config = self.config.prepare_Base_Model
+        params = self.params
+
+        create_directories([config.root_dir])
+
+        prepareBaseModelConfig = PrepareBaseModelConfig(
+                                root_dir=Path(config.root_dir),
+                                base_model_path = Path(config.base_model_path),
+                                updated_base_model_path= Path(config.updated_base_model_path),
+                                params_CLASSES = params.CLASSES,
+                                params_WEIGHTS = params.WEIGHTS,
+                                params_LEARNING_RATE = params.LEARNING_RATE,
+                                params_INCLUDE_TOP= params.INCLUDE_TOP,
+                                params_IMAGE_SIZE=params.IMAGE_SIZE
+                                )
+        return prepareBaseModelConfig
+
+    def get_prepareCallbackConfig(self)-> PrepareCallbacksconfig:
+        config = self.config.prepare_callbacks
+        params = self.params
+
+
+        # checkpoint_model_dir, _  =  os.path.split(config.checkpoint_model_filepath)
+        checkpoint_model_dir = os.path.dirname(config.checkpoint_model_filepath)
+        early_stopping_checkpoint_dir = os.path.dirname(config.early_stopping_checkpoint_filepath)
+
+        
+        create_directories([Path(config.root_dir), Path(config.tensorboard_root_log_dir),
+                            Path(checkpoint_model_dir),
+                            Path(early_stopping_checkpoint_dir)])
+        
+
+        prepareCallbacksconfig = PrepareCallbacksconfig(
+                                root_dir=Path(config.root_dir),
+                                tensorboard_root_log_dir=Path(config.tensorboard_root_log_dir),
+                                checkpoint_model_filepath=Path(config.checkpoint_model_filepath),
+                                early_stopping_checkpoint_filepath= Path(config.early_stopping_checkpoint_filepath)
+                                
+                                )
+                                
+        return prepareCallbacksconfig    
+    
+
+    def get_training_config(self)-> TrainingConfig:
+        config_training = self.config.training
+        config_model = self.config.prepare_Base_Model
+        training_data_path =os.path.join(self.config.data_ingestion.root_dir,"PetImages")
+
+        params = self.params        
+        create_directories([Path(config_training.root_dir)])
+
+        trainingConfig = TrainingConfig(
+                            root_dir=Path(config_training.root_dir),
+                            trained_model_path=Path(config_training.trained_model_path),
+                            updated_base_model_path = Path(config_model.updated_base_model_path),
+                            training_data = Path(training_data_path),
+                            params_epochs = self.params.EPOCHS,
+                            params_batch_size= self.params.BATCH_SIZE,
+                            params_is_augmentation= self.params.AUGMENTATION,
+                            params_image_size= self.params.IMAGE_SIZE
+                                )
+                                
+        return trainingConfig
