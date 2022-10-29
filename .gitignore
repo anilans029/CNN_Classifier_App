@@ -134,3 +134,10 @@ dmypy.json
 # image data
 *.jpg
 *.zip
+
+## callback_artifacts
+artifacts/prepare_callbacks/tensorboard_log_dir/
+artifacts/prepare_callbacks/chekpoint_dir/
+
+## model artifacts
+artifacts/prepare_Base_Model/
