@@ -1,3 +1,4 @@
+import shutil
 from webbrowser import get
 from classifier_app.entity.config_entity import DataIngestionConfig
 import urllib.request as request
@@ -7,6 +8,10 @@ from classifier_app import logger
 from classifier_app.utils import get_size
 from tqdm import tqdm
 from pathlib import Path
+from classifier_app.utils import create_directories
+import numpy as np
+from tqdm import tqdm
+
 
 
 class DataIngestion:
@@ -63,3 +68,49 @@ class DataIngestion:
                 ## preprocessing
                 for f in tqdm(updated_list_of_files):
                     self._preprocess(zf, f,self.config.unzip_dir)
+
+    def train_test_split(self):
+        train_dir = os.path.join(self.config.split_data, self.config.train_dir_name)
+        test_dir =  os.path.join(self.config.split_data, self.config.test_dir_name)
+        ## creating the target directories
+        dirs = [train_dir, test_dir]
+        create_directories(dirs)
+
+        train_ratio = self.config.params_train_ratio
+        test_ratio = self.config.params_test_ratio
+
+        base_dir  = os.listdir(self.config.unzip_dir)[0]
+        classes = os.listdir(os.path.join(self.config.unzip_dir, base_dir))
+
+        for cls in classes:
+            cur_dir = os.path.join(self.config.unzip_dir,base_dir, cls)
+            files = os.listdir(cur_dir)
+            np.random.shuffle(files)
+
+            for dir in dirs:
+                target_dir = os.path.join(dir, cls)
+                create_directories([target_dir])
+                if dir == train_dir:
+                    train_files = files[: int(len(files)*train_ratio)]
+                    print(f"copying the train_data_files of {cls} class to {target_dir}")
+                    for train_file in tqdm(train_files):
+                        src_file_path = os.path.join(cur_dir,train_file)
+                        shutil.copy(src_file_path, target_dir)
+                
+                elif dir== test_dir:
+                    test_files = files[int(len(files)*train_ratio):]
+                    print(f"copying the test_data_files of {cls} class to {target_dir}")
+                    for test_file in tqdm(test_files):
+                        src_file_path = os.path.join(cur_dir, test_file)
+                        shutil.copy(src_file_path, target_dir)
+
+
+
+        
+
+
+
+
+
+
+
