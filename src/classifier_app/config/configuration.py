@@ -22,10 +22,15 @@ class ConfigurationManager:
         create_directories([config.root_dir])
 
         data_ingestion_config = DataIngestionConfig(
-                                root_dir=config.root_dir,
-                                soruce_url=config.source_url,
-                                local_data_file = config.local_data_file,
-                                unzip_dir=config.unzip_dir
+                                root_dir=Path(config.root_dir),
+                                soruce_url=Path(config.source_url),
+                                local_data_file = Path(config.local_data_file),
+                                unzip_dir=Path(config.unzip_dir),
+                                train_dir_name= Path(config.train_dir_name),
+                                test_dir_name= Path(config.test_dir_name),
+                                split_data= Path(config.split_data),
+                                params_train_ratio= self.params.TRAIN_RATIO,
+                                params_test_ratio = self.params.TEST_RATIO
                               )
         return data_ingestion_config
 
@@ -76,7 +81,8 @@ class ConfigurationManager:
     def get_training_config(self)-> TrainingConfig:
         config_training = self.config.training
         config_model = self.config.prepare_Base_Model
-        training_data_path =os.path.join(self.config.data_ingestion.root_dir,"PetImages")
+        training_data_path =os.path.join(Path(self.config.data_ingestion.split_data),Path(self.config.data_ingestion.train_dir_name))
+        testing_data_path =os.path.join(Path(self.config.data_ingestion.split_data),Path(self.config.data_ingestion.test_dir_name))
 
         params = self.params        
         create_directories([Path(config_training.root_dir)])
@@ -85,7 +91,8 @@ class ConfigurationManager:
                             root_dir=Path(config_training.root_dir),
                             trained_model_path=Path(config_training.trained_model_path),
                             updated_base_model_path = Path(config_model.updated_base_model_path),
-                            training_data = Path(training_data_path),
+                            training_data = training_data_path,
+                            testing_data = testing_data_path,
                             params_epochs = self.params.EPOCHS,
                             params_batch_size= self.params.BATCH_SIZE,
                             params_is_augmentation= self.params.AUGMENTATION,
