@@ -141,3 +141,4 @@ artifacts/prepare_callbacks/chekpoint_dir/
 
 ## model artifacts
 artifacts/prepare_Base_Model/
+artifacts/training/model.h5
