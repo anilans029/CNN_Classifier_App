@@ -1,6 +1,6 @@
 from classifier_app.constants import *
 from classifier_app.utils import read_yaml,create_directories
-from classifier_app.entity.config_entity import DataIngestionConfig, PrepareBaseModelConfig, PrepareCallbacksconfig,TrainingConfig
+from classifier_app.entity.config_entity import DataIngestionConfig, PrepareBaseModelConfig, PrepareCallbacksconfig,TrainingConfig, EvaluateConfig
 import os
 
 
@@ -100,3 +100,18 @@ class ConfigurationManager:
                                 )
                                 
         return trainingConfig
+    
+
+    def get_evaluation_config(self):
+        evaluation_config = self.config.evaluation
+        
+        evaluation_config = EvaluateConfig(
+                                trained_model_path= evaluation_config.trained_model_path,
+                                root_dir= evaluation_config.root_dir,
+                                test_data_path= Path(os.path.join(self.config.data_ingestion.split_data, self.config.data_ingestion.test_dir_name)),
+                                params_target_size= self.params.IMAGE_SIZE[:-1],
+                                params_batch_size= self.params.BATCH_SIZE,
+                                params_interpolation= self.params.INTERPOLATION
+        )
+
+        return evaluation_config
