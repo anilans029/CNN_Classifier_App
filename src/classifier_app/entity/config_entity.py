@@ -46,3 +46,14 @@ class TrainingConfig:
     params_is_augmentation: bool
     params_image_size: list
 
+@dataclass
+class EvaluateConfig:
+    trained_model_path: Path
+    root_dir: Path
+    test_data_path: Path
+    params_target_size: list
+    params_batch_size: int
+    params_interpolation : str
+
+
+
